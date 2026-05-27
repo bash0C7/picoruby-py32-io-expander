@@ -4,6 +4,14 @@ PY32 IO Expander driver for PicoRuby (M5Stack StackChan AI base).
 
 Drives the PY32 microcontroller used on the M5Stack StackChan AI Desktop Robot as an I2C-connected GPIO and WS2812 LED controller. Provides GPIO direction/pull/drive-mode control and RGB565 LED RAM writing with read-modify-write refresh.
 
+## Installation
+
+Add this line to your PicoRuby build configuration (`build_config/xtensa-esp-picoruby.rb`):
+
+```ruby
+conf.gem github: 'bash0C7/picoruby-py32-io-expander'
+```
+
 ## I2C Address
 
 `0x6F`
