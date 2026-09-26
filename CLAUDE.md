@@ -29,6 +29,10 @@ The full cold-boot sequence for StackChan AI requires the AXP2101 PMIC and AW952
 
 If your application initializes PY32IOExpander at cold-boot, do not remove the `puts` statements in that init region — empirically (PicoRuby bytecode memory-layout dependent) their removal shifts the crash point and causes a LoadProhibited panic during PY32 init.
 
+## コメント
+
+コメントを書かない。コードは How、テストは What (テスト名)、コミットログは Why を担う。残すのは toolchain が読むもの (magic comment、型注釈、rigor/steep 指示) だけ。
+
 ## PicoRuby compatibility
 
 Per `~/CLAUDE.md`, **avoid** these in `mrblib/*.rb`:

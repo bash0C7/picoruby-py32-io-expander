@@ -22,6 +22,8 @@ conf.gem github: 'bash0C7/picoruby-py32-io-expander'
 
 ## Public API
 
+`refresh_leds` reads `REG_LED_CFG` (0x24) then ORs in bit 6 (`REFRESH_BIT`, 0x40) before writing back, so the LED count (bits 5:0) set by `set_led_count` is preserved. A plain write of 0x40 zeroes the count and the chip emits no WS2812 frame.
+
 ```ruby
 py32 = PY32IOExpander.new(i2c)  # i2c: a PicoRuby I2C instance
 

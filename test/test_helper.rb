@@ -1,4 +1,3 @@
-# PicoRuby shim: 'i2c' is a runtime built-in. Mark loaded for host tests.
 $LOADED_FEATURES << "i2c" unless $LOADED_FEATURES.include?("i2c")
 
 require "test/unit"

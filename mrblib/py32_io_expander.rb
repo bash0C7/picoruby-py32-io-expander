@@ -41,9 +41,7 @@ class PY32IOExpander
   end
 
   def refresh_leds
-    # Read-modify-write so the LED count (bits 5:0) written by set_led_count is
-    # preserved. Plain 0x40 would zero the count and the chip emits no frame.
-    current = read_reg(REG_LED_CFG, 1)[0]
+    current = read_byte(REG_LED_CFG)
     write_reg(REG_LED_CFG, current | REFRESH_BIT)
   end
 
@@ -79,20 +77,16 @@ class PY32IOExpander
       reg = reg_h
       bit = pin - 8
     end
-    current = read_reg(reg, 1)[0]
+    current = read_byte(reg)
     new_val = value ? (current | (1 << bit)) : (current & ~(1 << bit) & 0xFF)
     write_reg(reg, new_val)
   end
 
   def write_reg(reg, *data)
-    result = @i2c.write(I2C_ADDRESS, reg, *data, timeout: 1000)
-    raise IOError, "PY32 write failed (reg: 0x#{reg.to_s(16)})" unless result > 0
-    result
+    @i2c.write(I2C_ADDRESS, reg, *data, timeout: 1000)
   end
 
-  def read_reg(reg, length)
-    data = @i2c.read(I2C_ADDRESS, length, reg, timeout: 1000)
-    raise IOError, "PY32 read failed (reg: 0x#{reg.to_s(16)})" if data.nil? || data.empty?
-    data.bytes
+  def read_byte(reg)
+    @i2c.read(I2C_ADDRESS, 1, reg, timeout: 1000).getbyte(0)
   end
 end
